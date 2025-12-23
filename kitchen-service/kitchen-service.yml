@@ -1,0 +1,16 @@
+server:
+  port: 0
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/kitchen_db
+    username: ${DATABASE_USERNAME:restaurant_user}
+    password: ${DATABASE_PASSWORD:restaurant_pass}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml

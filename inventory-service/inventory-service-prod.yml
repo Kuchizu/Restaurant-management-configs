@@ -1,0 +1,6 @@
+server:
+  port: ${SERVER_PORT:0}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://inventory-db:5432/inventory_db}

@@ -1,0 +1,6 @@
+server:
+  port: ${SERVER_PORT:0}
+
+spring:
+  r2dbc:
+    url: ${DATABASE_URL:r2dbc:postgresql://order-db:5432/order_db}

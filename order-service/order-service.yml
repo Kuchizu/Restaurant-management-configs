@@ -1,0 +1,45 @@
+server:
+  port: 0
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/order_db
+    username: ${DATABASE_USERNAME:restaurant_user}
+    password: ${DATABASE_PASSWORD:restaurant_pass}
+    pool:
+      initial-size: 5
+      max-size: 10
+      max-idle-time: 10m
+      max-acquire-time: 5s
+      max-life-time: 30m
+      validation-query: SELECT 1
+      validation-depth: LOCAL
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      kitchenService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+      menuService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+springdoc:
+  swagger-ui:
+    operationsSorter: method
+  show-actuator: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
