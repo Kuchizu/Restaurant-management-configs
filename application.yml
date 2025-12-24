@@ -1,6 +1,10 @@
 # Common configuration for all services
 # Default settings optimized for development
 
+feign:
+  circuitbreaker:
+    enabled: true
+
 spring:
   jpa:
     hibernate:
