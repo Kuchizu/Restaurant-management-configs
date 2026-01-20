@@ -109,6 +109,23 @@ spring:
             - Path=/billing-service/api-docs
           filters:
             - RewritePath=/billing-service/api-docs, /api-docs
+        # File Service routes with /file prefix
+        - id: file-service-prefixed
+          uri: lb://file-service
+          predicates:
+            - Path=/file/api/**
+          filters:
+            - RewritePath=/file/api/(?<segment>.*), /api/$\{segment}
+        - id: file-service
+          uri: lb://file-service
+          predicates:
+            - Path=/api/files/**
+        - id: file-service-docs
+          uri: lb://file-service
+          predicates:
+            - Path=/file-service/api-docs
+          filters:
+            - RewritePath=/file-service/api-docs, /api-docs
       discovery:
         locator:
           enabled: true
@@ -149,4 +166,6 @@ springdoc:
         url: /inventory-service/api-docs
       - name: Billing Service
         url: /billing-service/api-docs
+      - name: File Service
+        url: /file-service/api-docs
     urls-primary-name: Auth (Gateway)
